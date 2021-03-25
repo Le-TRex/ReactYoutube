@@ -1,14 +1,33 @@
-import React from 'react'
+import React, {useState, Fragment} from 'react'
 import Videosinfo from '../videos'
 
-const check = <span class="material-icons">check_circle</span>
+const check = <span className="material-icons">check_circle</span>
 
 let videosArray = Videosinfo.videosList
 function Thumbnail ({children}) {
+
+  const [toBeWatchedLater, setToBeWatchedLater] = useState(false)
+
+  function PrintPicto(toBeWatchedLater){
+    if (toBeWatchedLater) {
+      return (<span className="material-icons">done</span>)
+    }else{
+      return (
+        <Fragment>
+          <p>À regarder plus tard</p>
+          <span className="material-icons">schedule</span>
+        </Fragment>
+      )
+    }
+  }
+
   return (
     videosArray.map((element, index) => (
       <div className="thumbnail" key={index}>
-        <img src={element.thumbnail} alt="Miniature de la vidéo" />
+        <div className="watchLater" onClick={()=>{setToBeWatchedLater(true)}}>
+          {PrintPicto(toBeWatchedLater)}
+        </div>
+        <img className="videoThumbnail" src={element.thumbnail} alt="Miniature de la vidéo" />
         <div className="metaData">
           <div className="videoLogo">
             <img src={element.channelIcon} alt="Logo de la chaîne" />

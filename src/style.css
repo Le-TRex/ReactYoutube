@@ -131,12 +131,9 @@ footer{
     padding: 10px;
 }
 
-.grid {
-    background: whitesmoke;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
+/* ######## */
+/* TAGSLIST */
+/* ######## */
 
 .tagsList {
     display: flex;
@@ -168,12 +165,34 @@ footer{
     color: whitesmoke;
 }
 
+/* #### */
+/* GRID */
+/* #### */
+
+.grid {
+    background: whitesmoke;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* THUMBNAILS */
 .thumbnail {
     display: flex;
     flex-direction: column;
     max-width: 310px;
     padding: 5px;
     margin-top: 20px;
+    position: relative;
+}
+
+.watchLater {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: black;
+    color: white;
 }
 
 .metaData {
@@ -197,6 +216,7 @@ footer{
 }
 
 .infosVideos > h3 {
+    color: black;
     font-weight: 500;
 }
 
@@ -211,6 +231,10 @@ footer{
     flex-direction: row;
     margin-top: 0;
 }
+
+/* ###### */
+/* FOOTER */
+/* ###### */
 
 .cookies{
     background-color: rgba(0, 0, 0, 0.815);
@@ -227,6 +251,10 @@ footer{
 
 .aside{
     width: 240px;
+}
+
+.hidden {
+    display: none;
 }
 
 /* cyrillic-ext */

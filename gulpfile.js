@@ -13,27 +13,27 @@ const babelify = require('babelify')
 const sourcemaps = require('gulp-sourcemaps')
 const watchify = require('watchify')
 
-const io = {
+const inputOutput = {
   src: './src',
   dest: './dist'
 }
 
 function clean() {
-  return del(io.dest)
+  return del(inputOutput.dest)
 }
 
 function css() {
-  return src(io.src + '/style.css')
+  return src(inputOutput.src + '/style.css')
     .pipe(sourcemaps.init({loadMaps: true}))
       .pipe(postcss([
 	      cssnano()
       ]))
     .pipe(sourcemaps.write())
-    .pipe(dest(io.dest))
+    .pipe(dest(inputOutput.dest))
 }
 
 function html() {
-  return src(io.src + '/index.html')
+  return src(inputOutput.src + '/index.html')
     .pipe(htmlmin({
       collapseWhitespace: true,
       removeComments: true,
@@ -42,15 +42,15 @@ function html() {
       removeRedundantAttributes: true,
       removeEmptyAttribute: true
     }))
-    .pipe(dest(io.dest))
+    .pipe(dest(inputOutput.dest))
 }
 
 function js() {
-  return watchify(browserify({
-    entries: io.src + '/script.jsx',
+  return browserify({
+    entries: inputOutput.src + '/script.jsx',
     debug: true,
     extensions: ['.js', '.jsx']
-  }))
+  })
     .transform(babelify.configure({
       presets: ['@babel/preset-env', '@babel/preset-react']
     }))
@@ -60,11 +60,11 @@ function js() {
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(terser())
     .pipe(sourcemaps.write())
-    .pipe(dest(io.dest))
+    .pipe(dest(inputOutput.dest))
 }
 
 function image() {
-  return src(io.src + '/assets/svg/*')
+  return src(inputOutput.src + '/assets/svg/*')
     .pipe(imagemin({
       interlaced: true,
       progressive: true,
@@ -75,23 +75,23 @@ function image() {
         }
       ]
     }))
-    .pipe(dest(io.dest + '/images'))
+    .pipe(dest(inputOutput.dest + '/images'))
 }
 
-function serve(cb) {
+function serve(callback) {
   browsersync.init({
     server: {
-      baseDir: io.dest
+      baseDir: inputOutput.dest
     }
   })
 
-  cb()
+  callback()
 }
 
-function reload(cb) {
+function reload(callback) {
   browsersync.reload()
 
-  cb()
+  callback()
 }
 
 // --------------------------------------------
@@ -101,8 +101,8 @@ const build = series(
   parallel(css, html, js, image),
 )
 
-watch([io.src + '/**/*.css', io.src + '/**/*.html'], series(build, reload))
-watch([io.src + '/**/*.jsx', io.src + '/**/*.js'], series(js, reload))
+watch([inputOutput.src + '/**/*.css', inputOutput.src + '/**/*.html'], series(build, reload))
+watch([inputOutput.src + '/**/*.jsx', inputOutput.src + '/**/*.js'], series(js, reload))
 
 exports.default = series(
   build,

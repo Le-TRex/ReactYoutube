@@ -1,10 +1,8 @@
 import React, {useState, Fragment} from 'react'
-import Videosinfo from '../videos'
 
 const check = <span className="material-icons">check_circle</span>
 
-let videosArray = Videosinfo.videosList
-function Thumbnail ({children}) {
+function Thumbnail ({element, children}) {
 
   const [toBeWatchedLater, setToBeWatchedLater] = useState(false)
 
@@ -22,8 +20,7 @@ function Thumbnail ({children}) {
   }
 
   return (
-    videosArray.map((element, index) => (
-      <div className="thumbnail" key={index}>
+      <div className="thumbnail">
         <div className="watchLater" onClick={()=>{setToBeWatchedLater(true)}}>
           {PrintPicto(toBeWatchedLater)}
         </div>
@@ -42,8 +39,6 @@ function Thumbnail ({children}) {
           </div>
         </div>
       </div>
-      )
-    )
   )
 }
 
